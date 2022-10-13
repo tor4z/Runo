@@ -1,0 +1,13 @@
+[workspace]
+members = [
+    "xtask",
+    "unikernel",
+    "plat/qemu-virt",
+    "libs/stdio",
+    "apps/helloworld"
+]
+
+
+default-members = ["xtask"]
+
+
