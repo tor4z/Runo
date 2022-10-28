@@ -12,16 +12,13 @@ use core::panic::PanicInfo;
 
 const STACK_SIZE: usize = 4096 * 5;
 
-
 struct Stack {
-    _data: [u8; STACK_SIZE]
+    _data: [u8; STACK_SIZE],
 }
 
-
 static STACK: Stack = Stack {
-    _data: [0; STACK_SIZE]
+    _data: [0; STACK_SIZE],
 };
-
 
 #[naked]
 #[export_name = "_start"]
@@ -38,19 +35,16 @@ pub extern "C" fn _start() {
     }
 }
 
-
 #[no_mangle]
 #[linkage = "weak"]
 fn kmain() -> i32 {
     panic!("Can not find main function!");
 }
 
-
 #[no_mangle]
 fn exit(_n: i32) -> ! {
     system_exit();
 }
-
 
 #[no_mangle]
 pub extern "C" fn runo_main() -> ! {
@@ -58,12 +52,10 @@ pub extern "C" fn runo_main() -> ! {
     exit(kmain());
 }
 
-
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
     loop {}
 }
-
 
 fn clear_bss() {
     extern "C" {
@@ -71,18 +63,14 @@ fn clear_bss() {
         pub fn ebss();
     }
 
-    (sbss as usize..ebss as usize)
-        .for_each(|a| {
-            unsafe {
-                (a as *mut u8).write_volatile(0);
-            }
-        })
+    (sbss as usize..ebss as usize).for_each(|a| unsafe {
+        (a as *mut u8).write_volatile(0);
+    })
 }
-
 
 fn system_exit() -> ! {
     // let (error, value): (usize, usize);
-    unsafe{
+    unsafe {
         asm!(
             "ecall",
             in("a7") 0x53525354 as usize,

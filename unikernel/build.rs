@@ -1,9 +1,4 @@
-use std::{
-    env,
-    fs,
-    path::PathBuf
-};
-
+use std::{env, fs, path::PathBuf};
 
 fn main() {
     let ld = &PathBuf::from(env::var_os("OUT_DIR").unwrap()).join("linker.ld");
@@ -12,7 +7,6 @@ fn main() {
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rustc-link-arg=-T{}", ld.display());
 }
-
 
 static LINKER: &str = r#"
 OUTPUT_ARCH(riscv)
