@@ -2,9 +2,15 @@
 
 ## Build
 
+```bash
+cargo xtask build
+```
 
+## Run in qemu
 
-
+```bash
+cargo xtask qemu
+```
 
 ## TODO
 
@@ -16,8 +22,12 @@
 
 ## Create a new lib-package
 
+```bash
+cargo xtask new [NAME] --lib
+```
 
 ## Create a new app-package
 
-
-
+```bash
+cargo xtask new [NAME] --app
+```
