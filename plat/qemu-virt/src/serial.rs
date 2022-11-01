@@ -4,7 +4,7 @@ use uart_16550::MmioSerialPort;
 
 lazy_static! {
     pub static ref SERIAL: Mutex<MmioSerialPort> =
-        { Mutex::new(unsafe { MmioSerialPort::new(0x1000_0000) }) };
+        Mutex::new(unsafe { MmioSerialPort::new(0x1000_0000) });
 }
 
 pub fn serial_putchar(c: u8) {

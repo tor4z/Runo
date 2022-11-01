@@ -9,6 +9,7 @@ static TARGET: &str = "riscv64gc-unknown-none-elf";
 enum Xtask {
     Build(BuildArgs),
     Qemu(QemuArgs),
+    New(NewArgs)
 }
 
 #[derive(clap::Args)]
@@ -25,6 +26,14 @@ struct QemuArgs {
     debug: bool,
 }
 
+#[derive(clap::Parser)]
+struct NewArgs {
+    #[arg(short, long, default_value_t = false)]
+    bin: bool,
+    #[arg(short, long, default_value_t= true)]
+    lib: bool
+}
+
 fn main() {
     match Xtask::parse() {
         Xtask::Build(_build_args) => {
@@ -35,6 +44,9 @@ fn main() {
             let kernel_bin_path = "target/riscv64gc-unknown-none-elf/release/unikernel.bin";
             strip_bin(kernel_path, kernel_bin_path);
             qemu_run(kernel_path, qemu_args.debug);
+        }
+        Xtask::New(_new_args) => {
+
         }
     };
 }
